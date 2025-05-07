@@ -1,6 +1,7 @@
 # 🪨 Rock Classifier (Deep Learning)
 
 A deep learning image classifier built with TensorFlow + MobileNetV2 to classify 5 types of rocks: **basalt, granite, marble, sandstone, slate.**
+Training reached 85% accuracy but validation stabilized at ~50%, showing good learning on the training set but limited generalization. Fine-tuning 30 epochs kept validation stable without overfitting. Further improvements could be achieved with more data and augmentation.
 
 ## 💻 Features
 - Transfer learning using MobileNetV2
