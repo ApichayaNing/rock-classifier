@@ -10,6 +10,16 @@ A deep learning image classifier built with TensorFlow + MobileNetV2 to classify
 
 ## 📊 Example
 ![example](https://github.com/user-attachments/assets/be61fb47-b351-4c09-a5be-484948c00a73)
+This image shows 8 rock samples tested with the model. The predicted class is shown above each image.
+
+✅ The model correctly predicted **6 out of 8** samples:
+- Correctly classified granite, marble, basalt, and slate.
+- Misclassified the reddish sandstone as granite (due to similar texture/color).
+- Correctly identified the white granite.
+
+This highlights the model’s strengths in recognizing granite and slate, while also showing that similar colors or textures (like sandstone and granite) can cause misclassification.
+
+Overall, the model achieved **75% accuracy on this test set**.
 
 
 ## 🚀 How to use
