@@ -1,35 +1,39 @@
-import streamlit as st
+import gdown
+import os
 import tensorflow as tf
-from tensorflow.keras.preprocessing import image
-import numpy as np
+
+model_path = 'rock_classifier_model.keras'
+google_drive_file_id = '1pDC-f7gY8_o-frRZ3A_oIsO4cmYxwg2t'
+
+
+if not os.path.exists(model_path):
+    url = f'https://drive.google.com/uc?id={google_drive_file_id}'
+    print("Downloading model from Google Drive...")
+    gdown.download(url, model_path, quiet=False)
+
+# Load the model
+model = tf.keras.models.load_model(model_path)
+
+import streamlit as st
 from PIL import Image
+import numpy as np
 
-# Load trained model
-model = tf.keras.models.load_model('model/trained_model.h5')
+st.title("Rock Classifier")
 
-# Class names
-class_names = ['basalt', 'granite', 'marble', 'sandstone', 'slate']
-
-st.title("🪨 Rock Classifier")
-st.write("Upload a rock image and I'll predict the type!")
-
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("Upload a rock image...", type=["jpg", "png", "jpeg"])
 
 if uploaded_file is not None:
-    img = Image.open(uploaded_file)
+    img = Image.open(uploaded_file).convert('RGB')
     st.image(img, caption='Uploaded Image', use_column_width=True)
-
-    if st.button('Predict'):
-        # Preprocess
-        img_resized = img.resize((224, 224))
-        img_array = image.img_to_array(img_resized) / 255.0
-        img_array = np.expand_dims(img_array, axis=0)
-
-        # Predict
-        prediction = model.predict(img_array)
-        predicted_index = np.argmax(prediction)
-        predicted_label = class_names[predicted_index]
-        confidence = prediction[0][predicted_index]
-
-        st.write(f"### Prediction: {predicted_label}")
-        st.write(f"Confidence: {confidence:.2f}")
+    
+    # Preprocess
+    img_resized = img.resize((224, 224))
+    img_array = np.array(img_resized) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+    
+    # Predict
+    preds = model.predict(img_array)
+    class_names = ['Basalt', 'Marble', 'Granite', 'Slate', 'Sandstone']
+    pred_label = class_names[np.argmax(preds)]
+    
+    st.write(f"**Prediction:** {pred_label}")
