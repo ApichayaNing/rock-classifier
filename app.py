@@ -20,7 +20,7 @@ model = tf.keras.models.load_model(model_path)
 
 class_names = ['Basalt', 'Marble', 'Granite', 'Slate', 'Sandstone']
 
-st.title("Rock Classifier - Multiple Images")
+st.title("🪨 Rock Classifier - Multiple Images 🪨")
 
 uploaded_files = st.file_uploader("Upload one or more rock images...", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
